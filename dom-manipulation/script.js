@@ -66,7 +66,7 @@ function addQuote(text, category) {
     quotes.push(newQuote);
     localStorage.setItem('quotes', JSON.stringify(quotes));
     syncQuoteToServer(newQuote);
-    alert('Quote added and synced with the server!');
+    alert("Quotes synced with server!");
 }
 
 // Import quotes from JSON
