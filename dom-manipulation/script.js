@@ -116,6 +116,10 @@ document.addEventListener('DOMContentLoaded', () => {
     showRandomQuote();
     syncQuotes("syncQuotes"); // Sync quotes on page load
 
+       // Periodic sync every 5 minutes
+       setInterval(syncQuotes, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+
     document.getElementById('newQuote').addEventListener('click', showRandomQuote);
     document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
         event.preventDefault();
