@@ -8,19 +8,18 @@ let quotes = JSON.parse(localStorage.getItem('quotes')) || [
 
 const API_URL = "https://jsonplaceholder.typicode.com/posts";
 
-// Sync quotes between local storage and the server
-async function syncQuotes() {
+// Fetch quotes from the mock server
+async function fetchQuotesFromServer() {
     try {
         const response = await fetch(API_URL);
         const serverQuotes = await response.json();
         resolveConflicts(serverQuotes);
     } catch (error) {
-        console.error("Error syncing quotes:", error);
-        alert("Sync failed. Please try again later.");
+        console.error("Error fetching quotes from server:", error);
     }
 }
 
-// Sync a new quote to the server
+// Sync new quotes to the server
 async function syncQuoteToServer(quote) {
     try {
         await fetch(API_URL, {
@@ -34,14 +33,13 @@ async function syncQuoteToServer(quote) {
     }
 }
 
-// Conflict resolution: Merges quotes with server data taking precedence
+// Conflict resolution: Server data takes precedence
 function resolveConflicts(serverQuotes) {
-    const localQuotes = JSON.parse(localStorage.getItem('quotes')) || [];
-    const mergedQuotes = [...new Map([...serverQuotes, ...localQuotes].map(q => [q.text, q])).values()];
+    const localData = JSON.parse(localStorage.getItem('quotes')) || [];
+    const mergedQuotes = [...new Map([...serverQuotes, ...localData].map(q => [q.text, q])).values()];
+    localStorage.setItem('quotes', JSON.stringify(mergedQuotes));
     quotes = mergedQuotes;
-    localStorage.setItem('quotes', JSON.stringify(quotes));
-    alert("Quotes synced successfully.");
-    showRandomQuote();
+    alert("Quotes synced and conflicts resolved.");
 }
 
 // Display a random quote
@@ -59,6 +57,16 @@ function addQuote(text, category) {
     localStorage.setItem('quotes', JSON.stringify(quotes));
     syncQuoteToServer(newQuote);
     alert("Quote added and synced to the server!");
+}
+
+
+// Add a new quote and sync with server
+function addQuote(text, category) {
+    const newQuote = { text, category };
+    quotes.push(newQuote);
+    localStorage.setItem('quotes', JSON.stringify(quotes));
+    syncQuoteToServer(newQuote);
+    alert('Quote added and synced with the server!');
 }
 
 // Import quotes from JSON
@@ -88,10 +96,10 @@ function exportQuotes() {
 // Initialize the app on page load
 document.addEventListener('DOMContentLoaded', () => {
     showRandomQuote();
-    syncQuotes(); // Sync quotes on page load
+    fetchQuotesFromServer();
 
     document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-    document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
+    document.getElementById('addQuoteForm').addEventListener('submit', event => {
         event.preventDefault();
         const text = event.target.quoteText.value.trim();
         const category = event.target.quoteCategory.value.trim();
@@ -99,10 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
             addQuote(text, category);
             event.target.reset();
         } else {
-            alert("Please enter both quote and category.");
+            alert('Please enter both quote and category.');
         }
     });
 
     document.getElementById('importQuotes').addEventListener('change', importQuotes);
     document.getElementById('exportQuotes').addEventListener('click', exportQuotes);
 });
+
