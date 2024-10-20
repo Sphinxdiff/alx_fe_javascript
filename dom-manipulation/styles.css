@@ -1,66 +1,82 @@
-/* General Body Styling */
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    text-align: center;
-    flex-direction: column; /* Align elements from top to bottom */
+    min-height: 100vh;
 }
 
-/* Header Styling */
+/* Header */
 h1 {
+    margin-top: 20px;
+    font-size: 2rem;
     color: #333;
-    margin-bottom: 20px;
+    text-align: center;
 }
 
-/* Quote Display Section */
+/* Quote Display */
 #quoteDisplay {
+    margin: 20px;
+    padding: 15px;
+    max-width: 600px;
     background-color: #fff;
-    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #555;
+    text-align: center;
 }
 
-/* Button Styling */
+/* Category Filter */
+#categoryFilter {
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+/* Buttons */
 button {
-    background-color: #007bff;
+    margin: 10px;
+    padding: 10px 15px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 20px;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
-/* Form Styling */
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
+button:active {
+    transform: scale(0.98);
 }
 
-/* Input Fields Styling */
-input {
-    width: calc(100% - 10px);
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+/* File Input */
+input[type="file"] {
+    margin: 10px;
+    padding: 5px;
+    font-size: 1rem;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 600px) {
+    #quoteDisplay {
+        max-width: 90%;
+        font-size: 1rem;
+    }
+
+    button {
+        width: 90%;
+        font-size: 1rem;
+    }
 }
