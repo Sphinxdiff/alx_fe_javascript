@@ -111,6 +111,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Initialize the app on page load
+document.addEventListener('DOMContentLoaded', () => {
+    showRandomQuote();
+    syncQuotes("syncQuotes"); // Sync quotes on page load
+
+    document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+    document.getElementById('addQuoteForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const text = event.target.quoteText.value.trim();
+        const category = event.target.quoteCategory.value.trim();
+        if (text && category) {
+            addQuote(text, category);
+            event.target.reset();
+        } else {
+            alert("Please enter both quote and category.");
+        }
+    });
+
+    document.getElementById('importQuotes').addEventListener('change', importQuotes);
+    document.getElementById('exportQuotes').addEventListener('click', exportQuotes);
+});
+
     document.getElementById('importQuotes').addEventListener('change', importQuotes);
     document.getElementById('exportQuotes').addEventListener('click', exportQuotes);
 });
